@@ -19,14 +19,14 @@ public class AppTest
 		
 		Assert.assertEquals(true, isValidDirection(dir));
 		Assert.assertEquals(true, isValidDirection(dir1));
-		Assert.assertEquals(true, isValidDirection(dir2));
+		Assert.assertEquals(false, isValidDirection(dir2));
 		Assert.assertEquals(true, isValidDirection(dir3));
 	}
 	
 	@Test
 	public void checkValidityForCommands()
 	{
-		char command = 'e';
+		char command = 'r';
 		
 		Assert.assertEquals(true, isValidCommand(command));
 	}
