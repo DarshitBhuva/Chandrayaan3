@@ -117,30 +117,44 @@ public class App
     
     public static void main( String[] args )
     {
-    	Scanner scanner = new Scanner(System.in);
+    	try {
+    		
+    		Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter initial position as (x, y, z): ");
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
-        int z = scanner.nextInt();
+            System.out.print("Enter initial position as (x, y, z): ");
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            int z = scanner.nextInt();
 
-        System.out.print("Enter initial direction: ");
-        char initialDir = scanner.next().charAt(0);
+            System.out.print("Enter initial direction: ");
+            char initialDir = scanner.next().charAt(0);
+            
+            isValidDirection(initialDir);
 
-        SpaceCraft lunarCraft = new SpaceCraft(x, y, z, initialDir);
+            SpaceCraft lunarCraft = new SpaceCraft(x, y, z, initialDir);
 
-        System.out.print("Enter number of commands: ");
-        int noOfCommands = scanner.nextInt();
+            System.out.print("Enter number of commands: ");
+            int noOfCommands = scanner.nextInt();
 
-        System.out.print("Enter space-separated commands: ");
-        List<Character> commands = new ArrayList<>();
-        for (int i = 0; i < noOfCommands; i++) {
-            commands.add(scanner.next().charAt(0));
-        }
+            System.out.print("Enter space-separated commands: ");
+            List<Character> commands = new ArrayList<>();
+            for (int i = 0; i < noOfCommands; i++) {
+            	char command = scanner.next().charAt(0);
+            	isValidCommand(command);
+                commands.add(command);
+            }
 
-        translateCommand(lunarCraft, commands);
-        System.out.println("Final position is: (" + lunarCraft.x + ", " + lunarCraft.y + ", " + lunarCraft.z + ")");
-        System.out.println("Final Direction is: " + lunarCraft.direction);
+            translateCommand(lunarCraft, commands);
+            System.out.println("Final position is: (" + lunarCraft.x + ", " + lunarCraft.y + ", " + lunarCraft.z + ")");
+            System.out.println("Final Direction is: " + lunarCraft.direction);
+    		
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println(e.getMessage());
+    		System.exit(0);
+    	}
+    	
     }
     
     public static boolean isValidDirection(char dir)
@@ -149,12 +163,17 @@ public class App
     	{
     		return true;
     	}
+    	else
+    		throw new NullPointerException("Direction is not valid"); 
     	
-    	return false;
     }
     
     public static boolean isValidCommand(char command)
     {
+    	if(command == 0)
+    	{
+    		throw new NullPointerException("Command is not valid");
+    	}
     	ArrayList<Character> commands = new ArrayList<Character>(6);
     	
     	commands.add('f');
@@ -163,6 +182,10 @@ public class App
     	commands.add('r');
     	commands.add('u');
     	commands.add('d');
+    	
+    	if(!commands.contains(command))
+    		throw new NullPointerException("Command is not valid");
+    	
     	return commands.contains(command);
     }
 }
